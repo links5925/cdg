@@ -1,10 +1,8 @@
 import 'dart:math';
 
-
 import 'package:cardgame/all_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 
 class CustomCard extends StatefulWidget {
   final int order;
@@ -21,10 +19,12 @@ class _CustomCardState extends State<CustomCard> {
     late int order = widget.order;
     return GestureDetector(
       onTap: () async {
-        if (context.read<AllProvider>().selectCard1 != order) {
+        if ((context.read<AllProvider>().selectCard1 != order) &&
+            (context.read<AllProvider>().selectCard2 == null) &&
+            (!context.read<AllProvider>().correctCard.contains(order))) {
           _angle = (_angle + pi) % (2 * pi);
           setState(() {});
-          Future.delayed(const Duration(milliseconds: 250), () {
+          await Future.delayed(const Duration(milliseconds: 250), () {
             context.read<AllProvider>().selectCard(order);
             _angle = (_angle + pi) % (2 * pi);
             setState(() {});
@@ -42,9 +42,24 @@ class _CustomCardState extends State<CustomCard> {
               ..rotateY(value),
             child: Container(
               alignment: Alignment.center,
-              width: 80,
+              width: 96,
               height: 120,
               decoration: BoxDecoration(
+                  border: Border.all(width: 0.5, color: Colors.grey),
+                  image: (((context.watch<AllProvider>().selectCard1 ==
+                                  order) ||
+                              (context.watch<AllProvider>().selectCard2 ==
+                                  order) ||
+                              (context
+                                  .watch<AllProvider>()
+                                  .correctCard
+                                  .contains(order))) ||
+                          false)
+                      ? DecorationImage(
+                          image: AssetImage(
+                              'assets/${context.read<AllProvider>().shufflecard[order]}.png'))
+                      : const DecorationImage(
+                          image: AssetImage('assets/INCOM.png'), scale: 8.5),
                   borderRadius: BorderRadius.circular(15),
                   color: ((context.watch<AllProvider>().selectCard1 == order) ||
                           (context.watch<AllProvider>().selectCard2 == order) ||
@@ -52,9 +67,8 @@ class _CustomCardState extends State<CustomCard> {
                               .watch<AllProvider>()
                               .correctCard
                               .contains(order)))
-                      ? Colors.pink[100]
-                      : Colors.blue[100]),
-              child: Text(context.read<AllProvider>().shufflecard[order]),
+                      ? Colors.white
+                      : const Color(0xFFFFC3C3)),
             ),
           );
         },

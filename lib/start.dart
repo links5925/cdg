@@ -2,6 +2,7 @@ import 'package:cardgame/game.dart';
 import 'package:cardgame/all_provider.dart';
 import 'package:cardgame/rank.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 class StartPage extends StatefulWidget {
@@ -17,6 +18,7 @@ class _StartPageState extends State<StartPage> {
     return PopScope(
       canPop: false,
       child: Scaffold(
+        backgroundColor: const Color(0xffffeded),
         body: SizedBox(
           width: MediaQuery.sizeOf(context).width,
           height: MediaQuery.sizeOf(context).height,
@@ -26,14 +28,19 @@ class _StartPageState extends State<StartPage> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    'Made\nby\nINCOM',
-                    style: TextStyle(color: Colors.pink[100], fontSize: 30),
+                  const Text(
+                    'CARD GAME\nWITH LOVE',
+                    style: TextStyle(
+                      color: Color(0xFFF87A7A),
+                      fontSize: 48,
+                      fontFamily: 'Cormorant Upright',
+                      fontWeight: FontWeight.w700,
+                    ),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 60),
-                  ElevatedButton(
-                      onPressed: () {
+                  GestureDetector(
+                      onTap: () {
                         context.read<AllProvider>().setStart();
                         Navigator.push(
                             context,
@@ -41,9 +48,18 @@ class _StartPageState extends State<StartPage> {
                               builder: (context) => const GamePage(),
                             ));
                       },
-                      child: Text(
-                        'Game Start',
-                        style: TextStyle(color: Colors.pink.withOpacity(0.5)),
+                      child: Container(
+                        width: 130,
+                        height: 130,
+                        decoration: const BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage('assets/Logo.png'))),
+                        child: Container(
+                          decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage('assets/START.png'),
+                                  scale: 3)),
+                        ),
                       ))
                 ],
               ),
@@ -51,14 +67,33 @@ class _StartPageState extends State<StartPage> {
                 alignment: Alignment.topRight,
                 child: Padding(
                   padding: const EdgeInsets.only(right: 10, top: 20),
-                  child: IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Rank()));
-                      },
-                      icon: const Icon(Icons.grade)),
+                  child: Row(
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            context.read<AllProvider>().musicChange();
+                          },
+                          icon: context.watch<AllProvider>().musicOn
+                              ? const Icon(
+                                  Icons.music_note,
+                                  color: Color(0xffF97A7A),
+                                )
+                              : const Icon(Icons.music_off)),
+                      const Spacer(),
+                      IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Rank()));
+                          },
+                          icon: const Icon(
+                            Icons.format_list_numbered,
+                            color: Color(0xffF97A7A),
+                            size: 30,
+                          )),
+                    ],
+                  ),
                 ),
               )
             ],
