@@ -45,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    getData();
+    setData();
   }
 
   getData() async {
@@ -58,17 +58,17 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  // setData() async {
-  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   await prefs.setStringList('1', <String>['name1', 'nuber1', '10001']);
-  //   await prefs.setStringList('2', <String>['name2', 'nuber2', '10002']);
-  //   await prefs.setStringList('3', <String>['name3', 'nuber3', '10003']);
-  //   await prefs.setStringList('4', <String>['name4', 'nuber4', '10004']);
-  //   await prefs.setStringList('5', <String>['name5', 'nuber5', '10005']);
-  //   await prefs.setStringList('6', <String>['name6', 'nuber6', '10006']);
-  //   await prefs.setStringList('7', <String>['name7', 'nuber7', '10007']);
-  //   getData();
-  // }
+  setData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList('1', <String>['안근우', 'number1', '101']);
+    await prefs.setStringList('2', <String>['최민선', 'number2', '102']);
+    await prefs.setStringList('3', <String>['최재원', 'number3', '103']);
+    await prefs.setStringList('4', <String>['이유민', 'number4', '104']);
+    await prefs.setStringList('5', <String>['김동원', 'number5', '105']);
+    await prefs.setStringList('6', <String>['박채강', 'number6', '106']);
+    await prefs.setStringList('7', <String>['한지희', 'number7', '107']);
+    getData();
+  }
 
   @override
   Widget build(BuildContext context) {
