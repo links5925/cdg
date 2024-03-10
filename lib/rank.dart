@@ -69,7 +69,7 @@ class _RankState extends State<Rank> {
                               fontSize: 16, color: Color(0xffF97A7A))),
                       const Spacer(),
                       Text(
-                          '${double.parse(context.read<AllProvider>().rankList[index].time).toStringAsFixed(2)}초',
+                          '${double.parse(context.read<AllProvider>().rankList[index].time).toStringAsFixed(1)}초',
                           style: const TextStyle(
                               fontSize: 16, color: Color(0xffF97A7A)))
                     ],
